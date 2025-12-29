@@ -1,36 +1,84 @@
-# Social Battery Forecast
+# Social Battery Forecast 🔋💀
 
-This project aims to forecast an individual's social battery levels using machine learning techniques. Social battery refers to the amount of energy one has for social interactions, and this project helps predict when levels might be low or high based on various factors.
+An absurdly dramatic predictor for when introverts will finally snap.
 
-## Features
+*"You'll hate everyone by 19:42. Suggested action: fake a phone call and Irish goodbye."*
 
-- Data collection and preprocessing
-- Model training for time series forecasting
-- Prediction and visualization of social battery levels
-- Evaluation of forecast accuracy
+Perfect for people who treat social interaction like a slowly draining phone battery... except the charger is solitude and Netflix.
 
-## Project Structure
+## 🚨 What It Does
 
-- `data/raw/`: Raw data files
-- `data/processed/`: Cleaned and processed data
-- `notebooks/`: Jupyter notebooks for data exploration and analysis
-- `src/`: Source code modules
-- `models/`: Trained machine learning models
-- `tests/`: Unit tests
+This magnificent piece of software analyzes:
 
-## Installation
+- Your calendar (how many meetings did you foolishly agree to?)
+- Estimated number of humans you'll encounter
+- Eye contact intensity (on a scale from "polite nod" to "soul-piercing small talk")
 
-1. Install Python 3.8+
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run notebooks or scripts as needed
+Then delivers brutally honest forecasts such as:
 
-## Usage
+- "Social battery critical at 15:17. Evacuate immediately."
+- "You'll be 100% done with humanity by 20:05. Blanket fort recommended."
+- "Peak misanthropy expected at 18:30. Do not operate heavy machinery or speak to coworkers."
 
-1. Place raw data in `data/raw/`
-2. Run data processing scripts in `src/`
-3. Train models and generate forecasts
-4. View results in notebooks or output files
+## 🛠️ Tech Stack (Because Someone Will Ask)
 
-## Contributing
+- Python (the language of introverts who prefer talking to computers)
+- Pure, unadulterated nonsense
+- A dash of fake math for legitimacy
+- Zero actual science
 
-Please follow standard Python development practices.
+## 🎯 Installation
+
+```bash
+git clone https://github.com/konstancjatanjga/social-battery-forecast.git
+cd social-battery-forecast
+python -m venv .venv
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+pip install -r requirements.txt
+```
+
+## 🏃 How to Use
+
+1. Export your calendar as an .ics file (Google Calendar → Settings → Export)
+2. Place it in the project folder as `my_calendar.ics`
+3. Run the prophecy engine:
+
+```bash
+python main.py
+```
+
+4. Receive your personalized doomsday prediction
+5. Cancel plans accordingly
+
+## ⚙️ Customization (For Advanced Hermits)
+
+Want more accuracy? Tweak these variables:
+
+- `eye_contact_multiplier`: Increase if you work in sales
+- `meeting_horror_factor`: Set to 11 if stand-ups are involved
+- `weekend_recovery_bonus`: Disable if you have kids
+
+## 🌟 Future Features (Maybe, If I Feel Social Enough)
+
+- Web version with a big red "DEPLETED" button
+- Push notifications: "RUN. THERE ARE PEOPLE."
+- Integration with smart lights (turns red when battery < 20%)
+- AI-powered excuse generator: "Sorry, my social battery is experiencing technical difficulties"
+
+## 🤝 Contributing
+
+Pull requests welcome! Especially if you add:
+
+- More dramatic output messages
+- Support for "forced family gathering" events
+- A "fake emergency text" generator
+
+Just don't ask me to pair program. My battery is at 3%.
+
+## 📜 License
+
+MIT – Do whatever you want with it. Just don't blame me when you use this as an excuse to skip parties.
+
+Remember: It's not antisocial. It's battery management.
+
+Made with ❤️ (and a strong preference for being left alone) by Konstancja Tanjga.
