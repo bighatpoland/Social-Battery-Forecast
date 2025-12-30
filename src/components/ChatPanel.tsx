@@ -5,6 +5,12 @@ import ChatInput from './ChatInput';
 import ChatIcon from '@mui/icons-material/Chat';
 import CloseIcon from '@mui/icons-material/Close';
 import useChat from '../lib/useChat';
+type ChatRole = 'user' | 'assistant' | 'system';
+interface ChatMessage {
+  id: string;
+  role: ChatRole;
+  text: string;
+}
 import { loadChatUploadOptIn, saveChatUploadOptIn } from '../lib/storage';
 
 const ChatPanel: React.FC = () => {

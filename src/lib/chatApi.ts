@@ -1,23 +1,61 @@
 import { ChatMessage, loadChatUploadOptIn } from './storage';
 
-const PROXY = (import.meta as any).env.VITE_CHAT_PROXY_URL || '/api/comet';
+// Set your Gemini API key in .env: VITE_GEMINI_API_KEY=...
+const GEMINI_API_KEY = (import.meta as any).env.VITE_GEMINI_API_KEY;
 
-export const sendMessageToProxy = async (messages: ChatMessage[]) => {
-  const res = await fetch(PROXY, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages }),
-  });
+if (!GEMINI_API_KEY) {
+  console.warn('VITE_GEMINI_API_KEY not set – will fall back to local rules only');
+}
+
+const GEMINI_MODEL = (import.meta as any).env.VITE_GEMINI_MODEL || 'gemini-1.5-flash';
+
+// Convert your ChatMessage[] format to Gemini's expected contents format
+const convertToGeminiFormat = (messages: ChatMessage[]) => {
+  return messages.map((msg) => ({
+    role: msg.role === 'assistant' ? 'model' : 'user',
+    parts: [{ text: msg.text }],
+  }));
+};
+
+export const sendMessageToGemini = async (messages: ChatMessage[]) => {
+  if (!GEMINI_API_KEY) {
+    throw new Error('Gemini API key not configured');
+  }
+
+  const contents = convertToGeminiFormat(messages);
+
+  const res = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents }),
+    }
+  );
 
   if (!res.ok) {
-    throw new Error(`Proxy error: ${res.status}`);
+    const errorText = await res.text();
+    throw new Error(`Gemini API error ${res.status}: ${errorText}`);
   }
 
   const data = await res.json();
-  return data;
+
+  // Extract the reply text
+  const candidate = data.candidates?.[0] || data.outputs?.[0] || null;
+  const text = candidate?.content?.parts?.[0]?.text || candidate?.content?.[0]?.parts?.[0]?.text;
+
+  if (!text) {
+    // Try some other common shapes
+    const alt = data.candidates?.[0]?.content?.map((c: any) => c.parts?.map((p: any) => p.text).join('')).join('\n')
+      || data.outputs?.[0]?.content?.map((c: any) => c.parts?.map((p: any) => p.text).join('')).join('\n');
+    if (alt) return alt;
+    throw new Error('No response text from Gemini');
+  }
+
+  return text;
 };
 
-// Fallback local rule engine for offline/demo
+// Fallback local rule engine (unchanged – for offline/demo)
 export const localRuleEngine = async (messages: ChatMessage[]) => {
   const last = messages[messages.length - 1];
   const userText = last?.text || '';
@@ -33,13 +71,12 @@ export const sendMessage = async (messages: ChatMessage[]) => {
   const messagesForApi = optIn ? messages : [messages[messages.length - 1]];
 
   try {
-    const data = await sendMessageToProxy(messagesForApi);
-    if (data?.reply) return data.reply as string;
-    if (data?.choices && data.choices[0]?.text) return data.choices[0].text;
-    return JSON.stringify(data);
+    const reply = await sendMessageToGemini(messagesForApi);
+    return reply;
   } catch (e) {
-    const f = await localRuleEngine(messages);
-    return f.reply;
+    console.error('Gemini failed, falling back to local rules:', e);
+    const fallback = await localRuleEngine(messages);
+    return fallback.reply;
   }
 };
 
