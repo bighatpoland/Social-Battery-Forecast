@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Container, Typography } from '@mui/material';
 import SlidersPanel from './components/SlidersPanel';
 import ForecastCard from './components/ForecastCard';
 import BatteryGauge from './components/BatteryGauge';
@@ -46,8 +47,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-6">Social Battery Forecast</h1>
+    <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2 }}>
+      <Typography variant="h1" align="center" sx={{ mb: 3 }}>Social Battery Forecast</Typography>
       <SlidersPanel inputs={inputs} onChange={updateInputs} />
       <CalendarEvents events={events} onChange={updateEvents} />
       {result && (
@@ -57,10 +58,10 @@ const App: React.FC = () => {
           <TimelineChart series={result.batterySeries} />
         </>
       )}
-      <footer className="text-center mt-8 text-sm text-gray-500">
+      <Typography variant="body2" align="center" sx={{ mt: 4, color: 'text.secondary' }}>
         This is satire. Predictions are fake. Your feelings are real.
-      </footer>
-    </div>
+      </Typography>
+    </Container>
   );
 };
 

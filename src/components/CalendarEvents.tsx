@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Card, CardContent, Typography, TextField, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { CalendarEvent } from '../types';
 
 interface Props {
@@ -30,50 +32,57 @@ const CalendarEvents: React.FC<Props> = ({ events, onChange }) => {
   };
 
   return (
-    <div className="p-4 bg-blue-100 rounded mb-4">
-      <h2 className="text-lg font-bold mb-2">Calendar Events</h2>
-      <div className="mb-4 flex flex-wrap gap-2">
-        <input
-          type="text"
-          placeholder="Event Title"
-          value={newEvent.title}
-          onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-          className="border p-2 flex-1 min-w-0"
-        />
-        <input
-          type="datetime-local"
-          value={newEvent.start}
-          onChange={(e) => setNewEvent({ ...newEvent, start: e.target.value })}
-          className="border p-2"
-        />
-        <input
-          type="datetime-local"
-          value={newEvent.end}
-          onChange={(e) => setNewEvent({ ...newEvent, end: e.target.value })}
-          className="border p-2"
-        />
-        <input
-          type="number"
-          placeholder="Social Cost (0-10)"
-          min="0"
-          max="10"
-          value={newEvent.socialCost}
-          onChange={(e) => setNewEvent({ ...newEvent, socialCost: +e.target.value })}
-          className="border p-2 w-20"
-        />
-        <button onClick={addEvent} className="bg-blue-500 text-white p-2 rounded">Add Event</button>
-      </div>
-      <ul className="space-y-2">
-        {events.map(e => (
-          <li key={e.id} className="flex justify-between items-center bg-white p-2 rounded">
-            <div>
-              <strong>{e.title}</strong> ({new Date(e.start).toLocaleString()} - {new Date(e.end).toLocaleString()}) - Cost: {e.socialCost}
-            </div>
-            <button onClick={() => removeEvent(e.id)} className="text-red-500 ml-2">Remove</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Card sx={{ mb: 2, bgcolor: 'primary.light' }}>
+      <CardContent>
+        <Typography variant="h2" sx={{ mb: 2 }}>Calendar Events</Typography>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
+          <TextField
+            label="Event Title"
+            value={newEvent.title}
+            onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+            fullWidth
+            sx={{ flex: 1, minWidth: 200 }}
+          />
+          <TextField
+            label="Start"
+            type="datetime-local"
+            value={newEvent.start}
+            onChange={(e) => setNewEvent({ ...newEvent, start: e.target.value })}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            label="End"
+            type="datetime-local"
+            value={newEvent.end}
+            onChange={(e) => setNewEvent({ ...newEvent, end: e.target.value })}
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
+            label="Social Cost"
+            type="number"
+            inputProps={{ min: 0, max: 10 }}
+            value={newEvent.socialCost}
+            onChange={(e) => setNewEvent({ ...newEvent, socialCost: +e.target.value })}
+            sx={{ width: 100 }}
+          />
+          <Button variant="contained" onClick={addEvent}>Add Event</Button>
+        </div>
+        <List>
+          {events.map(e => (
+            <ListItem key={e.id} secondaryAction={
+              <IconButton edge="end" onClick={() => removeEvent(e.id)}>
+                <DeleteIcon />
+              </IconButton>
+            }>
+              <ListItemText
+                primary={e.title}
+                secondary={`${new Date(e.start).toLocaleString()} - ${new Date(e.end).toLocaleString()} - Cost: ${e.socialCost}`}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </CardContent>
+    </Card>
   );
 };
 

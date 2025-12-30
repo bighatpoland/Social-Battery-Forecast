@@ -1,4 +1,5 @@
 import React from 'react';
+import { Card, CardContent, Typography, Slider, FormControlLabel, Checkbox } from '@mui/material';
 import { SocialInputs } from '../types';
 
 interface Props {
@@ -8,64 +9,60 @@ interface Props {
 
 const SlidersPanel: React.FC<Props> = ({ inputs, onChange }) => {
   return (
-    <div className="p-4 bg-gray-100 rounded mb-4">
-      <h2 className="text-lg font-bold mb-2">Inputs</h2>
-      <div className="mb-4">
-        <label className="block">Humans Encountered: {inputs.humansEncountered}</label>
-        <input
-          type="range"
-          min="0"
-          max="300"
-          value={inputs.humansEncountered}
-          onChange={(e) => onChange({ humansEncountered: +e.target.value })}
-          className="w-full"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block">Eye Contact Intensity: {inputs.eyeContactIntensity}</label>
-        <input
-          type="range"
-          min="0"
-          max="10"
-          value={inputs.eyeContactIntensity}
-          onChange={(e) => onChange({ eyeContactIntensity: +e.target.value })}
-          className="w-full"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block">Small Talk Minutes: {inputs.smallTalkMinutes}</label>
-        <input
-          type="range"
-          min="0"
-          max="180"
-          value={inputs.smallTalkMinutes}
-          onChange={(e) => onChange({ smallTalkMinutes: +e.target.value })}
-          className="w-full"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="block">Noise Annoyance: {inputs.noiseAnnoyance}</label>
-        <input
-          type="range"
-          min="0"
-          max="10"
-          value={inputs.noiseAnnoyance}
-          onChange={(e) => onChange({ noiseAnnoyance: +e.target.value })}
-          className="w-full"
-        />
-      </div>
-      <div className="mb-4">
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            checked={inputs.pseudoscienceMode}
-            onChange={(e) => onChange({ pseudoscienceMode: e.target.checked })}
-            className="mr-2"
+    <Card sx={{ mb: 2 }}>
+      <CardContent>
+        <Typography variant="h2" sx={{ mb: 2 }}>Inputs</Typography>
+        <div style={{ marginBottom: 16 }}>
+          <Typography gutterBottom>Humans Encountered</Typography>
+          <Slider
+            value={inputs.humansEncountered}
+            onChange={(_, value) => onChange({ humansEncountered: value as number })}
+            min={0}
+            max={300}
+            valueLabelDisplay="auto"
           />
-          Pseudoscience Mode
-        </label>
-      </div>
-    </div>
+        </div>
+        <div style={{ marginBottom: 16 }}>
+          <Typography gutterBottom>Eye Contact Intensity</Typography>
+          <Slider
+            value={inputs.eyeContactIntensity}
+            onChange={(_, value) => onChange({ eyeContactIntensity: value as number })}
+            min={0}
+            max={10}
+            valueLabelDisplay="auto"
+          />
+        </div>
+        <div style={{ marginBottom: 16 }}>
+          <Typography gutterBottom>Small Talk Minutes</Typography>
+          <Slider
+            value={inputs.smallTalkMinutes}
+            onChange={(_, value) => onChange({ smallTalkMinutes: value as number })}
+            min={0}
+            max={180}
+            valueLabelDisplay="auto"
+          />
+        </div>
+        <div style={{ marginBottom: 16 }}>
+          <Typography gutterBottom>Noise Annoyance</Typography>
+          <Slider
+            value={inputs.noiseAnnoyance}
+            onChange={(_, value) => onChange({ noiseAnnoyance: value as number })}
+            min={0}
+            max={10}
+            valueLabelDisplay="auto"
+          />
+        </div>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={inputs.pseudoscienceMode}
+              onChange={(e) => onChange({ pseudoscienceMode: e.target.checked })}
+            />
+          }
+          label="Pseudoscience Mode"
+        />
+      </CardContent>
+    </Card>
   );
 };
 
