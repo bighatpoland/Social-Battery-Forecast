@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography, Box, Button } from '@mui/material';
 import SlidersPanel from './components/SlidersPanel';
 import ForecastCard from './components/ForecastCard';
 import BatteryGauge from './components/BatteryGauge';
 import TimelineChart from './components/TimelineChart';
 import CalendarEvents from './components/CalendarEvents';
+import ScienceModal from './components/ScienceModal';
+import { getFact, randomIndex } from './lib/facts';
 import { forecast } from './lib/forecast';
 import { loadInputs, saveInputs, loadEvents, saveEvents } from './lib/storage';
 import { SocialInputs, CalendarEvent, ForecastResult } from './types';
@@ -21,6 +23,8 @@ const App: React.FC = () => {
   });
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [result, setResult] = useState<ForecastResult | null>(null);
+  const [scienceOpen, setScienceOpen] = useState(false);
+  const [factIndex, setFactIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const savedInputs = loadInputs();
@@ -46,6 +50,16 @@ const App: React.FC = () => {
     setInputs({ ...inputs, calendarLoad: load });
   };
 
+  const openScience = () => {
+    const idx = randomIndex(factIndex ?? undefined);
+    setFactIndex(idx);
+    setScienceOpen(true);
+  };
+
+  const closeScience = () => setScienceOpen(false);
+
+  const nextFact = () => setFactIndex(randomIndex(factIndex ?? undefined));
+
   return (
     <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2, background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
       <Typography variant="h1" align="center" sx={{ mb: 3 }}>Social Battery Forecast</Typography>
@@ -55,9 +69,15 @@ const App: React.FC = () => {
         <>
           <ForecastCard result={result} />
           <BatteryGauge battery={result.batterySeries[0]?.battery || 100} />
+          <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
+            <Button variant="outlined" color="primary" onClick={openScience}>
+              What does science say?
+            </Button>
+          </Box>
           <TimelineChart series={result.batterySeries} />
         </>
       )}
+      <ScienceModal open={scienceOpen} onClose={closeScience} onNext={nextFact} fact={factIndex !== null ? getFact(factIndex) : null} />
       <Typography variant="body2" align="center" sx={{ mt: 4, color: 'primary.light' }}>
         This is satire. Predictions are fake. Your feelings are real.
       </Typography>
