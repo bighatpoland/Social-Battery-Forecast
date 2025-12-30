@@ -5,6 +5,7 @@ import ForecastCard from './components/ForecastCard';
 import BatteryGauge from './components/BatteryGauge';
 import TimelineChart from './components/TimelineChart';
 import CalendarEvents from './components/CalendarEvents';
+import ChatPanel from './components/ChatPanel';
 import { forecast } from './lib/forecast';
 import { loadInputs, saveInputs, loadEvents, saveEvents } from './lib/storage';
 import { SocialInputs, CalendarEvent, ForecastResult } from './types';
@@ -63,6 +64,7 @@ const App: React.FC = () => {
       <Typography variant="body2" align="center" sx={{ mt: 4, color: 'primary.light' }}>
         This is satire. Predictions are fake. Your feelings are real.
       </Typography>
+      <ChatPanel />
     </Container>
   );
 };
