@@ -17,11 +17,11 @@ const TimelineChart: React.FC<Props> = ({ series }) => {
         <Typography variant="h3" sx={{ mb: 2 }}>Battery Timeline</Typography>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" />
-            <YAxis domain={[0, 100]} />
-            <Tooltip />
-            <Line type="monotone" dataKey="battery" stroke="#8884d8" strokeWidth={2} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+            <XAxis dataKey="time" stroke="#ffffff" />
+            <YAxis domain={[0, 100]} stroke="#ffffff" />
+            <Tooltip contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', color: '#fff' }} />
+            <Line type="monotone" dataKey="battery" stroke="#ffffff" strokeWidth={2} />
           </LineChart>
         </ResponsiveContainer>
       </CardContent>

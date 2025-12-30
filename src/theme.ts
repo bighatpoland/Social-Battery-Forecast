@@ -4,7 +4,7 @@ const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: { main: '#1976d2' },
-    secondary: { main: '#dc004e' },
+    secondary: { main: '#ff1744' },
     background: { default: '#121212', paper: '#1e1e1e' },
   },
   typography: {
@@ -29,6 +29,14 @@ const theme = createTheme({
         root: {
           backdropFilter: 'blur(10px)',
           backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          backdropFilter: 'blur(10px)',
+          backgroundColor: 'rgba(255, 255, 255, 0.05)',
         },
       },
     },

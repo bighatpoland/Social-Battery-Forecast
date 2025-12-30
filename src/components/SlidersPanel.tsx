@@ -9,7 +9,7 @@ interface Props {
 
 const SlidersPanel: React.FC<Props> = ({ inputs, onChange }) => {
   return (
-    <Card sx={{ mb: 2 }}>
+    <Card sx={{ mb: 2, border: '1px solid rgba(255, 255, 255, 0.2)', backgroundColor: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)' }}>
       <CardContent>
         <Typography variant="h2" sx={{ mb: 2 }}>Inputs</Typography>
         <div style={{ marginBottom: 16 }}>

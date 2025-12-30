@@ -12,9 +12,9 @@ const ForecastCard: React.FC<Props> = ({ result }) => {
     <Card sx={{ mb: 2, bgcolor: 'secondary.light' }}>
       <CardContent>
         <Typography variant="h2" sx={{ mb: 2 }}>Forecast</Typography>
-        <Typography variant="h4" sx={{ mb: 2 }}>{result.warning}</Typography>
-        <Typography sx={{ mb: 2 }}>Recovery: {new Date(result.recoveryTime).toLocaleString()}</Typography>
-        <Typography>{result.explanation}</Typography>
+        <Typography variant="h4" sx={{ mb: 2, color: '#8F019F' }}>{result.warning}</Typography>
+        <Typography sx={{ mb: 2, color: 'primary.main' }}>Recovery: {new Date(result.recoveryTime).toLocaleString()}</Typography>
+        <Typography sx={{ color: 'text.primary' }}>{result.explanation}</Typography>
       </CardContent>
     </Card>
   );

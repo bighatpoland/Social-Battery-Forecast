@@ -47,7 +47,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2 }}>
+    <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2, background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
       <Typography variant="h1" align="center" sx={{ mb: 3 }}>Social Battery Forecast</Typography>
       <SlidersPanel inputs={inputs} onChange={updateInputs} />
       <CalendarEvents events={events} onChange={updateEvents} />
@@ -58,7 +58,7 @@ const App: React.FC = () => {
           <TimelineChart series={result.batterySeries} />
         </>
       )}
-      <Typography variant="body2" align="center" sx={{ mt: 4, color: 'text.secondary' }}>
+      <Typography variant="body2" align="center" sx={{ mt: 4, color: 'primary.light' }}>
         This is satire. Predictions are fake. Your feelings are real.
       </Typography>
     </Container>
