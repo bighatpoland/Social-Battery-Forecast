@@ -6,12 +6,14 @@ import BatteryGauge from './components/BatteryGauge';
 import TimelineChart from './components/TimelineChart';
 import CalendarEvents from './components/CalendarEvents';
 import ChatPanel from './components/ChatPanel';
+import LandingPage from './components/LandingPage';
 import useCurrentDate from './lib/useCurrentDate';
 import { forecast } from './lib/forecast';
 import { loadInputs, saveInputs, loadEvents, saveEvents } from './lib/storage';
 import { SocialInputs, CalendarEvent, ForecastResult } from './types';
 
 const App: React.FC = () => {
+  const [showLanding, setShowLanding] = useState(true);
   const [inputs, setInputs] = useState<SocialInputs>({
     startTime: Date.now(),
     humansEncountered: 5,
@@ -50,7 +52,9 @@ const App: React.FC = () => {
     setInputs({ ...inputs, calendarLoad: load });
   };
 
-  
+  if (showLanding) {
+    return <LandingPage onGetStarted={() => setShowLanding(false)} />;
+  }
 
   return (
     <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2, background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
