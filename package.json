@@ -14,12 +14,16 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.6",
-    "@mui/material": "^7.3.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "recharts": "^2.8.0"
   },
   "devDependencies": {
+    "@mui/material": "^7.3.6",
+    "@mui/system": "^7.3.6",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -29,14 +33,11 @@
     "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
+    "jsdom": "^22.1.0",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
-    "vitest": "^0.29.8",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/user-event": "^14.4.3",
-    "jsdom": "^22.1.0"
+    "vitest": "^0.29.8"
   }
 }
