@@ -12,6 +12,7 @@ interface ChatMessage {
   text: string;
 }
 import { loadChatUploadOptIn, saveChatUploadOptIn } from '../lib/storage';
+import { formatFullDate } from '../lib/date';
 
 const ChatPanel: React.FC = () => {
   const [open, setOpen] = useState(false);
@@ -44,9 +45,25 @@ const ChatPanel: React.FC = () => {
             </Box>
           </Box>
           <Box sx={{ px: 1, flex: 1, overflowY: 'auto' }}>
-            {messages.map((m) => (
-              <ChatBubble key={m.id} role={m.role} text={m.text} />
-            ))}
+            {(() => {
+              let lastDate = '';
+              return messages.map((m) => {
+                const ts = m.createdAt ? new Date(m.createdAt) : new Date();
+                const dateLabel = formatFullDate(ts);
+                const showHeader = dateLabel !== lastDate;
+                lastDate = dateLabel;
+                return (
+                  <React.Fragment key={m.id}>
+                    {showHeader && (
+                      <Box display="flex" justifyContent="center" sx={{ my: 1 }}>
+                        <Typography variant="caption" sx={{ bgcolor: 'rgba(255,255,255,0.04)', px: 1, borderRadius: 1 }}>{dateLabel}</Typography>
+                      </Box>
+                    )}
+                    <ChatBubble role={m.role} text={m.text} />
+                  </React.Fragment>
+                );
+              });
+            })()}
           </Box>
           <ChatInput onSend={(t) => sendMessage(t)} disabled={isLoading} />
         </Paper>

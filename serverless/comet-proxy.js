@@ -143,7 +143,8 @@ export default async function handler(req, res) {
     const remainingDay = MAX_TOKENS_PER_DAY - (entry.tokensToday || 0);
 
     return res.status(200).json({ reply, usage: data.usage || null, quotas: { remainingDay, perRequestLimit: MAX_TOKENS_PER_REQUEST, perMinuteLimit: MAX_TOKENS_PER_MINUTE } });
-  } catch (err) {
-    console.error('Proxy error', err);
-    return res.status(500).json({ error: 'Proxy error' });
+    } catch (err) {
+      console.error('Proxy error', err);
+      return res.status(500).json({ error: 'Proxy error' });
+    }
   }

@@ -14,43 +14,59 @@ const SlidersPanel: React.FC<Props> = ({ inputs, onChange }) => {
         <Typography variant="h2" sx={{ mb: 2 }}>Inputs</Typography>
         <div style={{ marginBottom: 16 }}>
           <Typography gutterBottom>Humans Encountered</Typography>
-          <Slider
-            value={inputs.humansEncountered}
-            onChange={(_, value) => onChange({ humansEncountered: value as number })}
-            min={0}
-            max={300}
-            valueLabelDisplay="auto"
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Slider
+              value={inputs.humansEncountered}
+              onChange={(_, value) => onChange({ humansEncountered: value as number })}
+              min={0}
+              max={300}
+              valueLabelDisplay="on"
+              sx={{ flex: 1 }}
+            />
+            <Typography sx={{ width: 48, textAlign: 'right' }}>{inputs.humansEncountered}</Typography>
+          </div>
         </div>
         <div style={{ marginBottom: 16 }}>
           <Typography gutterBottom>Eye Contact Intensity</Typography>
-          <Slider
-            value={inputs.eyeContactIntensity}
-            onChange={(_, value) => onChange({ eyeContactIntensity: value as number })}
-            min={0}
-            max={10}
-            valueLabelDisplay="auto"
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Slider
+              value={inputs.eyeContactIntensity}
+              onChange={(_, value) => onChange({ eyeContactIntensity: value as number })}
+              min={0}
+              max={10}
+              valueLabelDisplay="on"
+              sx={{ flex: 1 }}
+            />
+            <Typography sx={{ width: 48, textAlign: 'right' }}>{inputs.eyeContactIntensity}</Typography>
+          </div>
         </div>
         <div style={{ marginBottom: 16 }}>
           <Typography gutterBottom>Small Talk Minutes</Typography>
-          <Slider
-            value={inputs.smallTalkMinutes}
-            onChange={(_, value) => onChange({ smallTalkMinutes: value as number })}
-            min={0}
-            max={180}
-            valueLabelDisplay="auto"
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Slider
+              value={inputs.smallTalkMinutes}
+              onChange={(_, value) => onChange({ smallTalkMinutes: value as number })}
+              min={0}
+              max={20}
+              valueLabelDisplay="on"
+              sx={{ flex: 1 }}
+            />
+            <Typography sx={{ width: 48, textAlign: 'right' }}>{inputs.smallTalkMinutes}</Typography>
+          </div>
         </div>
         <div style={{ marginBottom: 16 }}>
           <Typography gutterBottom>Noise Annoyance</Typography>
-          <Slider
-            value={inputs.noiseAnnoyance}
-            onChange={(_, value) => onChange({ noiseAnnoyance: value as number })}
-            min={0}
-            max={10}
-            valueLabelDisplay="auto"
-          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <Slider
+              value={inputs.noiseAnnoyance}
+              onChange={(_, value) => onChange({ noiseAnnoyance: value as number })}
+              min={0}
+              max={10}
+              valueLabelDisplay="on"
+              sx={{ flex: 1 }}
+            />
+            <Typography sx={{ width: 48, textAlign: 'right' }}>{inputs.noiseAnnoyance}</Typography>
+          </div>
         </div>
         <FormControlLabel
           control={

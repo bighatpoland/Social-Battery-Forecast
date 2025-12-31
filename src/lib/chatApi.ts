@@ -1,4 +1,5 @@
 import { ChatMessage, loadChatUploadOptIn } from './storage';
+import { formatShortDate, formatFullDate } from './date';
 
 // Set your Gemini API key in .env: VITE_GEMINI_API_KEY=...
 const GEMINI_API_KEY = (import.meta as any).env.VITE_GEMINI_API_KEY;
@@ -59,16 +60,19 @@ export const sendMessageToGemini = async (messages: ChatMessage[]) => {
 export const localRuleEngine = async (messages: ChatMessage[]) => {
   const last = messages[messages.length - 1];
   const userText = last?.text || '';
+  const today = formatShortDate();
   if (/recharge|recover|rest|sleep/i.test(userText)) {
-    return { reply: 'Try taking a 10–20 minute break in a quiet space, or plan a low-energy activity you enjoy.' };
+    return { reply: `Your social battery forecast for today (${today}): Try taking a 10–20 minute break in a quiet space, or plan a low-energy activity you enjoy.` };
   }
-  return { reply: `I hear you. You said: "${userText}" — tell me more about what you find draining.` };
+  return { reply: `How are you feeling so far today (${today})? I hear you. You said: "${userText}" — tell me more about what you find draining.` };
 };
 
 export const sendMessage = async (messages: ChatMessage[]) => {
   // Respect user opt-in: only send full history if user opted in
   const optIn = loadChatUploadOptIn();
-  const messagesForApi = optIn ? messages : [messages[messages.length - 1]];
+  // Prepend a short date hint so assistant can reference "today" correctly
+  const dateHint = { id: 'date-hint', role: 'user', text: `Today's date is ${formatShortDate()}. When referring to "today", use this date.` } as ChatMessage;
+  const messagesForApi = optIn ? [dateHint, ...messages] : [dateHint, messages[messages.length - 1]];
 
   try {
     const reply = await sendMessageToGemini(messagesForApi);

@@ -6,6 +6,7 @@ import BatteryGauge from './components/BatteryGauge';
 import TimelineChart from './components/TimelineChart';
 import CalendarEvents from './components/CalendarEvents';
 import ChatPanel from './components/ChatPanel';
+import useCurrentDate from './lib/useCurrentDate';
 import { forecast } from './lib/forecast';
 import { loadInputs, saveInputs, loadEvents, saveEvents } from './lib/storage';
 import { SocialInputs, CalendarEvent, ForecastResult } from './types';
@@ -13,15 +14,17 @@ import { SocialInputs, CalendarEvent, ForecastResult } from './types';
 const App: React.FC = () => {
   const [inputs, setInputs] = useState<SocialInputs>({
     startTime: Date.now(),
-    humansEncountered: 0,
-    eyeContactIntensity: 0,
-    smallTalkMinutes: 0,
+    humansEncountered: 5,
+    eyeContactIntensity: 5,
+    smallTalkMinutes: 2,
     calendarLoad: 0,
     noiseAnnoyance: 0,
     pseudoscienceMode: false,
   });
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [result, setResult] = useState<ForecastResult | null>(null);
+
+  const { formattedLong } = useCurrentDate();
 
   useEffect(() => {
     const savedInputs = loadInputs();
@@ -51,7 +54,8 @@ const App: React.FC = () => {
 
   return (
     <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2, background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
-      <Typography variant="h1" align="center" sx={{ mb: 3 }}>Social Battery Forecast</Typography>
+      <Typography variant="h1" align="center" sx={{ mb: 1 }}>Social Battery Forecast</Typography>
+      <Typography variant="h6" align="center" sx={{ mb: 3, color: 'primary.light' }}>{formattedLong}</Typography>
       <SlidersPanel inputs={inputs} onChange={updateInputs} />
       <CalendarEvents events={events} onChange={updateEvents} />
       {result && (
