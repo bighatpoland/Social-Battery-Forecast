@@ -57,23 +57,30 @@ const App: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2, background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
-      <Typography variant="h1" align="center" sx={{ mb: 1 }}>Social Battery Forecast</Typography>
-      <Typography variant="h6" align="center" sx={{ mb: 3, color: 'primary.light' }}>{formattedLong}</Typography>
-      <SlidersPanel inputs={inputs} onChange={updateInputs} />
-      <CalendarEvents events={events} onChange={updateEvents} />
-      {result && (
-        <>
-          <ForecastCard result={result} />
-          <BatteryGauge battery={result.batterySeries[0]?.battery || 100} />
-          <TimelineChart series={result.batterySeries} />
-        </>
-      )}
-      <Typography variant="body2" align="center" sx={{ mt: 4, color: 'primary.light' }}>
-        This is satire. Predictions are fake. Your feelings are real.
-      </Typography>
-      <ChatPanel />
-    </Container>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
+      <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2 }}>
+        <Typography variant="h1" align="center" sx={{ mb: 1, color: 'white' }}>Social Battery Forecast</Typography>
+        <Typography variant="h6" align="center" sx={{ mb: 3, color: 'primary.light' }}>{formattedLong}</Typography>
+        <SlidersPanel inputs={inputs} onChange={updateInputs} />
+        <CalendarEvents events={events} onChange={updateEvents} />
+        {result && (
+          <>
+            <ForecastCard result={result} />
+            <BatteryGauge battery={result.batterySeries[0]?.battery || 100} />
+            <TimelineChart series={result.batterySeries} />
+          </>
+        )}
+        {!result && (
+          <Typography variant="body1" align="center" sx={{ mt: 4, color: 'primary.light' }}>
+            Loading forecast...
+          </Typography>
+        )}
+        <Typography variant="body2" align="center" sx={{ mt: 4, color: 'primary.light' }}>
+          This is satire. Predictions are fake. Your feelings are real.
+        </Typography>
+        <ChatPanel />
+      </Container>
+    </div>
   );
 };
 
