@@ -100,32 +100,31 @@ const App: React.FC = () => {
     setShowLanding(true);
   };
 
-  // Safety render: if not loading and no result, show landing page
-  if (!loading && !result) {
-    return <LandingPage onGetStarted={handleStart} />;
-  }
-
-  return (
+  // Ternary logic: loading -> Dashboard -> LandingPage
+  return loading ? (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
       <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2 }}>
         <Typography variant="h1" align="center" sx={{ mb: 1, color: 'white' }}>Social Battery Forecast</Typography>
         <Typography variant="h6" align="center" sx={{ mb: 3, color: 'primary.light' }}>{formattedLong}</Typography>
-        
-        {/* 1. Show Loading UI */}
-        {loading && <LoadingScreen onAbort={handleAbort} />}
-
-        {/* 2. Show Result UI (Only if loading is done AND result exists) */}
-        {!loading && result && (
-          <Dashboard
-            result={result}
-            inputs={inputs}
-            events={events}
-            onInputsChange={updateInputs}
-            onEventsChange={updateEvents}
-          />
-        )}
+        <LoadingScreen onAbort={handleAbort} />
       </Container>
     </div>
+  ) : result ? (
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
+      <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2 }}>
+        <Typography variant="h1" align="center" sx={{ mb: 1, color: 'white' }}>Social Battery Forecast</Typography>
+        <Typography variant="h6" align="center" sx={{ mb: 3, color: 'primary.light' }}>{formattedLong}</Typography>
+        <Dashboard
+          result={result}
+          inputs={inputs}
+          events={events}
+          onInputsChange={updateInputs}
+          onEventsChange={updateEvents}
+        />
+      </Container>
+    </div>
+  ) : (
+    <LandingPage onGetStarted={handleStart} />
   );
 };
 
