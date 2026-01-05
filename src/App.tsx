@@ -36,11 +36,18 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    saveInputs(inputs);
-    saveEvents(events);
-    const res = forecast(inputs, events);
-    setResult(res);
-    setLoading(false);
+    try {
+      saveInputs(inputs);
+      saveEvents(events);
+      console.log('Calculating forecast with inputs:', inputs);
+      const res = forecast(inputs, events);
+      console.log('Forecast calculated:', res);
+      setResult(res);
+    } catch (error) {
+      console.error('Error calculating forecast:', error);
+    } finally {
+      setLoading(false);
+    }
   }, [inputs, events]);
 
   const updateInputs = (updates: Partial<SocialInputs>) => {
