@@ -32,21 +32,6 @@ const App: React.FC = () => {
     setEvents(loadEvents());
   }, []);
 
-  useEffect(() => {
-    try {
-      saveInputs(inputs);
-      saveEvents(events);
-      console.log('Calculating forecast with inputs:', inputs);
-      const res = forecast(inputs, events);
-      console.log('Forecast calculated:', res);
-      setResult(res);
-    } catch (error) {
-      console.error('Error calculating forecast:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [inputs, events]);
-
   const updateInputs = (updates: Partial<SocialInputs>) => {
     setInputs({ ...inputs, ...updates });
   };
@@ -101,31 +86,37 @@ const App: React.FC = () => {
   };
 
   // Ternary logic: loading -> Dashboard -> LandingPage
-  return loading ? (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
-      <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2 }}>
-        <Typography variant="h1" align="center" sx={{ mb: 1, color: 'white' }}>Social Battery Forecast</Typography>
-        <Typography variant="h6" align="center" sx={{ mb: 3, color: 'primary.light' }}>{formattedLong}</Typography>
-        <LoadingScreen onAbort={handleAbort} />
-      </Container>
-    </div>
-  ) : result ? (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
-      <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2 }}>
-        <Typography variant="h1" align="center" sx={{ mb: 1, color: 'white' }}>Social Battery Forecast</Typography>
-        <Typography variant="h6" align="center" sx={{ mb: 3, color: 'primary.light' }}>{formattedLong}</Typography>
-        <Dashboard
-          result={result}
-          inputs={inputs}
-          events={events}
-          onInputsChange={updateInputs}
-          onEventsChange={updateEvents}
-        />
-      </Container>
-    </div>
-  ) : (
-    <LandingPage onGetStarted={handleStart} />
-  );
+  if (loading) {
+    return (
+      <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
+        <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2 }}>
+          <Typography variant="h1" align="center" sx={{ mb: 1, color: 'white' }}>Social Battery Forecast</Typography>
+          <Typography variant="h6" align="center" sx={{ mb: 3, color: 'primary.light' }}>{formattedLong}</Typography>
+          <LoadingScreen onAbort={handleAbort} />
+        </Container>
+      </div>
+    );
+  }
+
+  if (result) {
+    return (
+      <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)' }}>
+        <Container maxWidth="md" sx={{ minHeight: '100vh', p: 2 }}>
+          <Typography variant="h1" align="center" sx={{ mb: 1, color: 'white' }}>Social Battery Forecast</Typography>
+          <Typography variant="h6" align="center" sx={{ mb: 3, color: 'primary.light' }}>{formattedLong}</Typography>
+          <Dashboard
+            result={result}
+            inputs={inputs}
+            events={events}
+            onInputsChange={updateInputs}
+            onEventsChange={updateEvents}
+          />
+        </Container>
+      </div>
+    );
+  }
+
+  return <LandingPage onGetStarted={handleStart} />;
 };
 
 export default App;
