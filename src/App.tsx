@@ -61,11 +61,27 @@ const App: React.FC = () => {
     setInputs({ ...inputs, calendarLoad: load });
   };
 
+  const handleStart = async () => {
+    setShowLanding(false);
+    setLoading(true);
+    
+    // Simulate a 1-second calculation delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    try {
+      // Calculate the forecast with current inputs
+      const calculatedResult = forecast(inputs, events);
+      console.log('Forecast calculated on start:', calculatedResult);
+      setResult(calculatedResult);
+    } catch (error) {
+      console.error('Error calculating forecast on start:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   if (showLanding) {
-    return <LandingPage onGetStarted={() => {
-      setShowLanding(false);
-      setLoading(true);
-    }} />;
+    return <LandingPage onGetStarted={handleStart} />;
   }
 
   return (
@@ -87,18 +103,20 @@ const App: React.FC = () => {
             {result && result.batterySeries && result.batterySeries.length > 0 && (
               <>
                 <ForecastCard result={result} />
-                <BatteryGauge battery={result.batterySeries[0]?.battery || 100} />
-                <TimelineChart series={result.batterySeries} />
+                <BatteryGauge battery={result.batterySeries[0]?.battery ?? 100} />
+                <TimelineChart series={result.batterySeries ?? []} />
               </>
             )}
             {!result && (
               <Typography variant="body1" align="center" sx={{ mt: 4, color: 'primary.light' }}>
-                Loading forecast...
+                Adjust the sliders and click 'Get Started' to see your forecast.
               </Typography>
             )}
-            <Typography variant="body2" align="center" sx={{ mt: 4, color: 'primary.light' }}>
-              This is satire. Predictions are fake. Your feelings are real.
-            </Typography>
+            {result && (
+              <Typography variant="body2" align="center" sx={{ mt: 4, color: 'primary.light' }}>
+                This is satire. Predictions are fake. Your feelings are real.
+              </Typography>
+            )}
           </>
         )}
         
