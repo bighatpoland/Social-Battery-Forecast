@@ -18,7 +18,7 @@ const convertToGeminiFormat = (messages: ChatMessage[]) => {
   }));
 };
 
-export const sendMessageToGemini = async (messages: ChatMessage[]) => {
+export const sendMessageToGemini = async (messages: ChatMessage[], signal?: AbortSignal) => {
   if (!GEMINI_API_KEY) {
     throw new Error('Gemini API key not configured');
   }
@@ -31,6 +31,7 @@ export const sendMessageToGemini = async (messages: ChatMessage[]) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contents }),
+      signal, // Pass the AbortSignal to the fetch request
     }
   );
 
@@ -67,7 +68,7 @@ export const localRuleEngine = async (messages: ChatMessage[]) => {
   return { reply: `How are you feeling so far today (${today})? I hear you. You said: "${userText}" — tell me more about what you find draining.` };
 };
 
-export const sendMessage = async (messages: ChatMessage[]) => {
+export const sendMessage = async (messages: ChatMessage[], signal?: AbortSignal) => {
   // Respect user opt-in: only send full history if user opted in
   const optIn = loadChatUploadOptIn();
   // Prepend a short date hint so assistant can reference "today" correctly
@@ -75,7 +76,7 @@ export const sendMessage = async (messages: ChatMessage[]) => {
   const messagesForApi = optIn ? [dateHint, ...messages] : [dateHint, messages[messages.length - 1]];
 
   try {
-    const reply = await sendMessageToGemini(messagesForApi);
+    const reply = await sendMessageToGemini(messagesForApi, signal);
     return reply;
   } catch (e) {
     console.error('Gemini failed, falling back to local rules:', e);
