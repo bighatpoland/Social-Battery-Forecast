@@ -1,6 +1,15 @@
 import React from 'react';
+import { getEnergyAdvice, type EnergyWarning } from '../lib/energyAdvice';
+import { ForecastResult, CalendarEvent } from '../types';
 
-const LandingPage: React.FC<{ onGetStarted: () => void }> = ({ onGetStarted }) => {
+interface LandingPageProps {
+  onGetStarted: () => void;
+  forecast?: ForecastResult | null;
+  events?: CalendarEvent[];
+}
+
+const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, forecast = null, events = [] }) => {
+  const energyAdvice: EnergyWarning | null = getEnergyAdvice(forecast, events);
   return (
     <div className="min-h-screen bg-slate-100" style={{ backgroundColor: '#F8FAFC' }}>
       <div className="p-4 md:p-8 max-w-7xl mx-auto">
@@ -63,13 +72,36 @@ const LandingPage: React.FC<{ onGetStarted: () => void }> = ({ onGetStarted }) =
           {/* Quick Insights - Small Card */}
           <div className="bg-white backdrop-blur-xl bg-opacity-80 border border-white border-opacity-20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
             <h2 className="text-lg font-bold text-slate-900 mb-3">Quick Insights</h2>
-            <p className="text-slate-600 text-sm mb-3">
-              Your social battery is 75% charged. Consider a recharge activity soon.
-            </p>
-            <div className="flex gap-2">
-              <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded">Active</span>
-              <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Stable</span>
-            </div>
+            {energyAdvice ? (
+              <div className={`flex items-start gap-3 p-3 rounded-lg ${
+                energyAdvice.severity === 'high'
+                  ? 'bg-red-50 border border-red-200'
+                  : energyAdvice.severity === 'medium'
+                    ? 'bg-yellow-50 border border-yellow-200'
+                    : 'bg-blue-50 border border-blue-200'
+              }`}>
+                <span className="text-xl">💡</span>
+                <p className={`text-sm font-medium ${
+                  energyAdvice.severity === 'high'
+                    ? 'text-red-700'
+                    : energyAdvice.severity === 'medium'
+                      ? 'text-yellow-700'
+                      : 'text-blue-700'
+                }`}>
+                  {energyAdvice.message}
+                </p>
+              </div>
+            ) : (
+              <>
+                <p className="text-slate-600 text-sm mb-3">
+                  Your social battery is 75% charged. Consider a recharge activity soon.
+                </p>
+                <div className="flex gap-2">
+                  <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded">Active</span>
+                  <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Stable</span>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Energy Tips - Small Card */}
