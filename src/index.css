@@ -1,3 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Modern 2026 Aesthetic Base Styles */
+@layer base {
+  body {
+    @apply bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors duration-300;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl;
+  }
+
+  h3 {
+    @apply text-2xl;
+  }
+}
+
+/* Smooth animations */
+@layer utilities {
+  .animate-in {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-energy-full-600 via-energy-mid-500 to-energy-low-600 bg-clip-text text-transparent;
+  }
+}

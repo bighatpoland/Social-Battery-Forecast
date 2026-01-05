@@ -1,173 +1,94 @@
 import React from 'react';
-import { Box, Typography, Button, Card, CardContent, Grid, Container } from '@mui/material';
-import BatteryIcon from '@mui/icons-material/BatteryFull';
-import ChatIcon from '@mui/icons-material/Chat';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import DateRangeIcon from '@mui/icons-material/DateRange';
 
 const LandingPage: React.FC<{ onGetStarted: () => void }> = ({ onGetStarted }) => {
   return (
-    <Box
-      sx={{
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #000000 0%, #1e3a8a 50%, #7c3aed 100%)',
-        color: 'white',
-        p: 2,
-      }}
-    >
-      <Container maxWidth="md">
-        {/* Hero Section */}
-        <Box textAlign="center" sx={{ py: 8 }}>
-          <Typography variant="h1" sx={{ mb: 2, fontWeight: 'bold' }}>
+    <div className="min-h-screen bg-slate-100" style={{ backgroundColor: '#F8FAFC' }}>
+      <div className="p-4 md:p-8 max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-2">
             Social Battery Forecast
-          </Typography>
-          <Typography variant="h5" sx={{ mb: 4, color: 'primary.light' }}>
+          </h1>
+          <p className="text-slate-600 text-lg mb-6">
             Recharge Your Social Energy – Forecast, Track, and Thrive with AI-Powered Insights
-          </Typography>
-          <Button
-            variant="contained"
-            size="large"
+          </p>
+          <button
             onClick={onGetStarted}
-            sx={{ px: 4, py: 2, fontSize: '1.2rem' }}
+            className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition"
           >
             Get Started
-          </Button>
-        </Box>
+          </button>
+        </div>
 
-        {/* Features Section */}
-        <Typography variant="h3" textAlign="center" sx={{ mb: 4 }}>
-          Key Features
-        </Typography>
-        <Grid container spacing={4} sx={{ mb: 8 }}>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                backdropFilter: 'blur(10px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                textAlign: 'center',
-                p: 2,
-              }}
-            >
-              <CardContent>
-                <TrendingUpIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h6">AI Forecasts</Typography>
-                <Typography>Get daily predictions based on your interactions.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                backdropFilter: 'blur(10px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                textAlign: 'center',
-                p: 2,
-              }}
-            >
-              <CardContent>
-                <BatteryIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h6">Interactive Sliders</Typography>
-                <Typography>Adjust factors for real-time insights.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                backdropFilter: 'blur(10px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                textAlign: 'center',
-                p: 2,
-              }}
-            >
-              <CardContent>
-                <ChatIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h6">Chat Assistant</Typography>
-                <Typography>Personalized advice to recharge.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Card
-              sx={{
-                backdropFilter: 'blur(10px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                textAlign: 'center',
-                p: 2,
-              }}
-            >
-              <CardContent>
-                <DateRangeIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h6">Date-Aware Tracking</Typography>
-                <Typography>Forecasts tied to specific days.</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          {/* Top Row */}
+          {/* Energy Forecast Chart - Wide Card (span 2) */}
+          <div className="md:col-span-2 bg-white backdrop-blur-xl bg-opacity-80 border border-white border-opacity-20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+            <h2 className="text-2xl font-bold text-slate-900 mb-4">Energy Forecast Chart</h2>
+            <div className="h-64 md:h-80 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg flex items-center justify-center">
+              <p className="text-slate-500">Your forecast visualization will appear here</p>
+            </div>
+          </div>
 
-        {/* How It Works */}
-        <Typography variant="h3" textAlign="center" sx={{ mb: 4 }}>
-          How It Works
-        </Typography>
-        <Box sx={{ mb: 8 }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>1. Input Your Day</Typography>
-          <Typography>Use sliders to set factors like encounters and eye contact.</Typography>
-          <Typography variant="h6" sx={{ mb: 2, mt: 4 }}>2. Get a Forecast</Typography>
-          <Typography>Receive AI-powered predictions for your social battery.</Typography>
-          <Typography variant="h6" sx={{ mb: 2, mt: 4 }}>3. Chat for Tips</Typography>
-          <Typography>Talk to the assistant for personalized recharging advice.</Typography>
-        </Box>
+          {/* Current Battery Status - Square Card (span 1) */}
+          <div className="bg-white backdrop-blur-xl bg-opacity-80 border border-white border-opacity-20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition flex flex-col items-center justify-center">
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Current Battery</h2>
+            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
+              <span className="text-4xl font-bold text-white">75%</span>
+            </div>
+            <p className="text-slate-600 text-sm mt-4 text-center">Good</p>
+          </div>
 
-        {/* Testimonials */}
-        <Typography variant="h3" textAlign="center" sx={{ mb: 4 }}>
-          What Users Say
-        </Typography>
-        <Grid container spacing={4} sx={{ mb: 8 }}>
-          <Grid item xs={12} md={6}>
-            <Card
-              sx={{
-                backdropFilter: 'blur(10px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                p: 2,
-              }}
-            >
-              <CardContent>
-                <Typography>"Helped me avoid social burnout!"</Typography>
-                <Typography sx={{ mt: 1, fontStyle: 'italic' }}>- User A</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Card
-              sx={{
-                backdropFilter: 'blur(10px)',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                p: 2,
-              }}
-            >
-              <CardContent>
-                <Typography>"Simple and insightful."</Typography>
-                <Typography sx={{ mt: 1, fontStyle: 'italic' }}>- User B</Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+          {/* Bottom Row */}
+          {/* Upcoming Events - Vertical Card */}
+          <div className="md:row-span-2 bg-white backdrop-blur-xl bg-opacity-80 border border-white border-opacity-20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+            <h2 className="text-xl font-bold text-slate-900 mb-4">Upcoming Events</h2>
+            <div className="space-y-3">
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <p className="font-semibold text-slate-900 text-sm">Team Meeting</p>
+                <p className="text-slate-600 text-xs">Today 2:00 PM</p>
+              </div>
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <p className="font-semibold text-slate-900 text-sm">Coffee with Alex</p>
+                <p className="text-slate-600 text-xs">Tomorrow 10:00 AM</p>
+              </div>
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <p className="font-semibold text-slate-900 text-sm">Project Deadline</p>
+                <p className="text-slate-600 text-xs">Friday 5:00 PM</p>
+              </div>
+            </div>
+          </div>
 
-        {/* Footer */}
-        <Box textAlign="center" sx={{ py: 4, borderTop: '1px solid rgba(255, 255, 255, 0.2)' }}>
-          <Typography variant="body2">© 2025 Social Battery Forecast. All rights reserved.</Typography>
-          <Typography variant="body2" sx={{ mt: 1 }}>
-            This is satire. Predictions are fake. Your feelings are real.
-          </Typography>
-        </Box>
-      </Container>
-    </Box>
+          {/* Quick Insights - Small Card */}
+          <div className="bg-white backdrop-blur-xl bg-opacity-80 border border-white border-opacity-20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+            <h2 className="text-lg font-bold text-slate-900 mb-3">Quick Insights</h2>
+            <p className="text-slate-600 text-sm mb-3">
+              Your social battery is 75% charged. Consider a recharge activity soon.
+            </p>
+            <div className="flex gap-2">
+              <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded">Active</span>
+              <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">Stable</span>
+            </div>
+          </div>
+
+          {/* Energy Tips - Small Card */}
+          <div className="bg-white backdrop-blur-xl bg-opacity-80 border border-white border-opacity-20 rounded-2xl p-6 shadow-lg hover:shadow-xl transition">
+            <h2 className="text-lg font-bold text-slate-900 mb-3">Energy Tips</h2>
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li className="flex items-start">
+                <span className="mr-2">💡</span>
+                <span>Take a 15-min break after meetings</span>
+              </li>
+              <li className="flex items-start">
+                <span className="mr-2">🎧</span>
+                <span>Listen to music for recharge</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
